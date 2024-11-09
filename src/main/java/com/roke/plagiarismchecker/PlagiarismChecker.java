@@ -1,23 +1,40 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- */
-
 package com.roke.plagiarismchecker;
-
-import com.formdev.flatlaf.intellijthemes.FlatDarkPurpleIJTheme;
-import com.roke.plagiarismchecker.view.MainFrame;
-
+import java.util.HashMap;
+import java.util.Map;
 /**
  *
  * @author Jhordie
  */
 public class PlagiarismChecker {
+    private Map<String, String> database;
 
-    public static void main(String[] args) {
-        FlatDarkPurpleIJTheme.setup();
+    public PlagiarismChecker() {
+        database = new HashMap<>();
+        loadFiles(new String[]{"Hola mi nombre es Jhordie", "Hola mi nombre es Jesus"});
+    }
+    
+    public boolean loadFiles(String[] paths) {
+        for (String path: paths){
+            String content = readFileContent(path);
+            database.put(path, content);
+        }
+        return true;
+    }
 
-        //System.out.println("Hello World!");
-        MainFrame mainFrm = new MainFrame();
-        mainFrm.setVisible(true);
+    public ResultChecker verifyPlagiarism(String text) {
+        for (Map.Entry<String, String> entry: database.entrySet()) {
+            if (containsPlagiarism(entry.getValue(), text)) {
+                return new ResultChecker(true, entry.getKey());
+            }
+        }
+        return new ResultChecker(false, null);
+    }
+    
+    private boolean containsPlagiarism(String content, String text) {
+        return content.contains(text);
+    }
+    
+    public String readFileContent(String path) {
+        return path;
     }
 }

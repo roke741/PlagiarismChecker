@@ -4,18 +4,20 @@
  */
 package com.roke.plagiarismchecker.view;
 
+import com.roke.plagiarismchecker.PlagiarismChecker;
+import com.roke.plagiarismchecker.ResultChecker;
 import java.awt.Color;
 
 /**
  *
  * @author Jhordie
  */
-public class MainFrame extends javax.swing.JFrame {
+public class PlagiarismDetection extends javax.swing.JFrame {
 
     /**
      * Creates new form MainFrame
      */
-    public MainFrame() {
+    public PlagiarismDetection() {
         initComponents();
         setBackground(new Color(0, 0, 0, 0));
 
@@ -35,9 +37,9 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txtInputUser = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnComprobarPlagio = new javax.swing.JButton();
         btnExit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -59,16 +61,21 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("JetBrains Mono", 0, 16)); // NOI18N
         jLabel2.setText("Ingrese su texto:");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        txtInputUser.setColumns(20);
+        txtInputUser.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        txtInputUser.setRows(5);
+        jScrollPane1.setViewportView(txtInputUser);
 
         jButton1.setFont(new java.awt.Font("JetBrains Mono", 1, 18)); // NOI18N
         jButton1.setText("Subir Archivo");
 
-        jButton2.setFont(new java.awt.Font("JetBrains Mono", 1, 18)); // NOI18N
-        jButton2.setText("Comprobar plagio");
+        btnComprobarPlagio.setFont(new java.awt.Font("JetBrains Mono", 1, 18)); // NOI18N
+        btnComprobarPlagio.setText("Comprobar Plagio");
+        btnComprobarPlagio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnComprobarPlagioActionPerformed(evt);
+            }
+        });
 
         btnExit.setBackground(new java.awt.Color(255, 51, 51));
         btnExit.setFont(new java.awt.Font("Segoe UI", 1, 13)); // NOI18N
@@ -99,7 +106,7 @@ public class MainFrame extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnComprobarPlagio, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -116,7 +123,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnComprobarPlagio, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -161,6 +168,19 @@ public class MainFrame extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnExitActionPerformed
 
+    private void btnComprobarPlagioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprobarPlagioActionPerformed
+        // TODO add your handling code here:
+        PlagiarismChecker checker = new PlagiarismChecker();
+        String inputText = txtInputUser.getText();
+        ResultChecker result = checker.verifyPlagiarism(inputText);
+        
+        if (result != null) {
+            System.out.println(result.toString());
+        } else {
+            System.out.println("Error al comprobar el plagio");
+        }
+    }//GEN-LAST:event_btnComprobarPlagioActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -178,33 +198,34 @@ public class MainFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PlagiarismDetection.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PlagiarismDetection.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PlagiarismDetection.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PlagiarismDetection.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainFrame().setVisible(true);
+                new PlagiarismDetection().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnComprobarPlagio;
     private javax.swing.JButton btnExit;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     private com.roke.plagiarismchecker.view.ui.PanelRound panelRound1;
+    private javax.swing.JTextArea txtInputUser;
     // End of variables declaration//GEN-END:variables
 }
