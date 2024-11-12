@@ -24,6 +24,7 @@ public class ResultChecker {
     @Override
     public String toString() {
         if (isPlagiarized){
+            //return 
             return "Plagio detectado. Texto coincidente: " + matchingText;
         } else {
             return "No se detecto plagio.";
