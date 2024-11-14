@@ -1,6 +1,6 @@
-com\roke\plagiarismchecker\view\ui\LoadFileDialog$1.class
 com\roke\plagiarismchecker\utils\Log.class
 com\roke\plagiarismchecker\view\PlagiarismDetection.class
+com\roke\plagiarismchecker\view\ui\LoadDialog$1.class
 com\roke\plagiarismchecker\PlagiarismDetectionMain.class
 com\roke\plagiarismchecker\view\PlagiarismDetection$1.class
 com\roke\plagiarismchecker\view\PlagiarismDetection$3.class
@@ -8,6 +8,7 @@ com\roke\plagiarismchecker\view\SplashScreen$1.class
 com\roke\plagiarismchecker\view\SplashScreen.class
 com\roke\plagiarismchecker\view\ui\PanelRound.class
 com\roke\plagiarismchecker\view\PlagiarismDetection$4.class
+com\roke\plagiarismchecker\view\ui\LoadDialog.class
 com\roke\plagiarismchecker\ResultChecker.class
 com\roke\plagiarismchecker\PlagiarismDetectionMain$1.class
 com\roke\plagiarismchecker\view\ui\LoadFileDialog.class
