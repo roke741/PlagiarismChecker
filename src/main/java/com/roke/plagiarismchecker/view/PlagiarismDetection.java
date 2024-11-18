@@ -3,18 +3,29 @@ package com.roke.plagiarismchecker.view;
 import com.roke.plagiarismchecker.PlagiarismChecker;
 import com.roke.plagiarismchecker.ResultChecker;
 import com.roke.plagiarismchecker.utils.Log;
-import com.roke.plagiarismchecker.view.ui.LoadFileDialog;
 
 import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.SQLException;
 import javax.swing.*;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
+
+import static com.roke.plagiarismchecker.service.DBConnection.closeConnection;
+import static com.roke.plagiarismchecker.service.DBConnection.getConnection;
+
+import com.roke.plagiarismchecker.view.ui.LoadDialog;
+import com.roke.plagiarismchecker.view.ui.LoadFileDialog;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.Set;
+import java.util.HashSet;
 
 /**
  *
@@ -22,7 +33,9 @@ import javax.swing.text.StyledDocument;
  */
 public class PlagiarismDetection extends javax.swing.JFrame {
     LoadFileDialog load = new LoadFileDialog();
-
+    Connection connection = null;
+    Statement statement = null;
+    ResultSet resultSet = null;
     /**
      * Creates new form MainFrame
      */
@@ -216,13 +229,26 @@ public class PlagiarismDetection extends javax.swing.JFrame {
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
         this.dispose();
+        //System.exit(1);
     }//GEN-LAST:event_btnExitActionPerformed
 
     private void btnComprobarPlagioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprobarPlagioActionPerformed
         PlagiarismChecker checker = new PlagiarismChecker();
-        String inputText = txtInputUser.getText();
+        String textoUsuario = txtInputUser.getText();
         StyledDocument doc = txtResultado.getStyledDocument();
+
+        if (textoUsuario.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Ingrese un texto para comprobar el plagio", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (textoUsuario.length() < 10) {
+            JOptionPane.showMessageDialog(null, "El texto ingresado es muy corto", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        load.show();
+
         Style style = doc.addStyle("style", null);
+        /*
         try {
             doc.insertString(doc.getLength(), "Línea 1\n", style);
 
@@ -234,7 +260,29 @@ public class PlagiarismDetection extends javax.swing.JFrame {
 
         } catch (BadLocationException e) {
             System.out.println("Error al insertar texto");
+        }*/
+        try {
+
+            ResultChecker result = checker.verifyPlagiarism(textoUsuario);
+            if (result != null) {
+                if (result.isPlagiarized()) {
+                    StyleConstants.setForeground(style, Color.ORANGE);
+                    doc.insertString(doc.getLength(), "El texto ingresado contiene plagio con el texto: " + result.toString() + "\n", style);
+                } else {
+                    doc.insertString(doc.getLength(), "El texto ingresado no contiene plagio\n", style);
+                }
+            } else {
+                doc.insertString(doc.getLength(), "Error al comprobar el plagio\n", style);
+            }
+
+        } catch (BadLocationException e) {
+            throw new RuntimeException(e);
+        } finally {
+            closeConnection(connection);
+            load.hide();
         }
+
+
 
 //        ResultChecker result = checker.verifyPlagiarism(inputText);
 //        if (result != null) {

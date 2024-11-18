@@ -1,4 +1,6 @@
 package com.roke.plagiarismchecker;
+import com.roke.plagiarismchecker.service.SourcesText;
+
 import java.util.HashMap;
 import java.util.Map;
 /**
@@ -10,7 +12,8 @@ public class PlagiarismChecker {
 
     public PlagiarismChecker() {
         database = new HashMap<>();
-        loadFiles(new String[]{"Hola mi nombre es Jhordie", "Hola mi nombre es Jesus"});
+        String[] fuentes = SourcesText.getSourcesText();
+        loadFiles(fuentes);
     }
     
     public boolean loadFiles(String[] paths) {
