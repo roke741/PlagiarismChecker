@@ -246,7 +246,6 @@ public class PlagiarismDetection extends javax.swing.JFrame {
             return;
         }
         load.show();
-
         Style style = doc.addStyle("style", null);
         /*
         try {
@@ -279,17 +278,9 @@ public class PlagiarismDetection extends javax.swing.JFrame {
             throw new RuntimeException(e);
         } finally {
             closeConnection(connection);
-            load.hide();
         }
+        //load.hide();
 
-
-
-//        ResultChecker result = checker.verifyPlagiarism(inputText);
-//        if (result != null) {
-//            System.out.println(result.toString());
-//        } else {
-//            System.out.println("Error al comprobar el plagio");
-//        }
     }//GEN-LAST:event_btnComprobarPlagioActionPerformed
 
     private void btnUploadFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUploadFileActionPerformed
