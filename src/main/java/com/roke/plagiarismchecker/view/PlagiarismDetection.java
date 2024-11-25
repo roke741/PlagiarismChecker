@@ -233,10 +233,8 @@ public class PlagiarismDetection extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExitActionPerformed
 
     private void btnComprobarPlagioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprobarPlagioActionPerformed
-        PlagiarismChecker checker = new PlagiarismChecker();
         String textoUsuario = txtInputUser.getText();
         StyledDocument doc = txtResultado.getStyledDocument();
-
         if (textoUsuario.trim().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Ingrese un texto para comprobar el plagio", "Error", JOptionPane.ERROR_MESSAGE);
             return;
@@ -246,6 +244,7 @@ public class PlagiarismDetection extends javax.swing.JFrame {
             return;
         }
         load.show();
+        PlagiarismChecker checker = new PlagiarismChecker();
         Style style = doc.addStyle("style", null);
         /*
         try {
