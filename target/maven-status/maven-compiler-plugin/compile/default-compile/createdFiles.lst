@@ -1,6 +1,7 @@
 com\roke\plagiarismchecker\utils\Log.class
 com\roke\plagiarismchecker\view\PlagiarismDetection.class
 com\roke\plagiarismchecker\view\ui\LoadDialog$1.class
+com\roke\plagiarismchecker\model\entities\Fuente.class
 com\roke\plagiarismchecker\service\DBConnection.class
 com\roke\plagiarismchecker\PlagiarismDetectionMain.class
 com\roke\plagiarismchecker\view\PlagiarismDetection$1.class
@@ -20,3 +21,4 @@ com\roke\plagiarismchecker\model\dao\impl\DAOParrafo.class
 com\roke\plagiarismchecker\PlagiarismChecker.class
 com\roke\plagiarismchecker\service\SourcesText.class
 com\roke\plagiarismchecker\view\PlagiarismDetection$2.class
+com\roke\plagiarismchecker\view\SplashScreen$2.class

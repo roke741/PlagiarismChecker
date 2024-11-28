@@ -1,19 +1,15 @@
 package com.roke.plagiarismchecker;
 
 import com.formdev.flatlaf.intellijthemes.FlatDarkPurpleIJTheme;
-import com.roke.plagiarismchecker.view.PlagiarismDetection;
 
 import java.awt.*;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.sql.Connection;
-import java.sql.SQLException;
+
 import javax.swing.*;
 
-import static com.roke.plagiarismchecker.service.DBConnection.closeConnection;
-import static com.roke.plagiarismchecker.service.DBConnection.getConnection;
-
+import com.roke.plagiarismchecker.view.SplashScreen;
 /**
  *
  * @author Jhordie
@@ -26,6 +22,7 @@ public class PlagiarismDetectionMain {
         UIManager.put( "ScrollBar.showButtons", true );
         UIManager.put( "ScrollBar.thumbArc", 30 );
         UIManager.put( "ScrollBar.thumbInsets", new Insets( 2, 2, 2, 2 ) );
+        UIManager.put( "ProgressBar.arc", 999 );
 
         try {
             InputStream inputStream = PlagiarismDetectionMain.class.getClassLoader().getResourceAsStream("banner.txt");
@@ -41,8 +38,8 @@ public class PlagiarismDetectionMain {
             }
             SwingUtilities.invokeLater(new Runnable() {
                 public void run(){
-                    PlagiarismDetection mainFrm = new PlagiarismDetection();
-                    mainFrm.setVisible(true);
+                    SplashScreen splash = new SplashScreen();
+                    splash.setVisible(true);
                 }
             });
         } catch (Exception e) {

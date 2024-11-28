@@ -33,16 +33,15 @@ import java.util.HashSet;
  */
 public class PlagiarismDetection extends javax.swing.JFrame {
     LoadFileDialog load = new LoadFileDialog();
-    Connection connection = null;
-    Statement statement = null;
-    ResultSet resultSet = null;
+    Connection connection;
+    Statement statement;
+    ResultSet resultSet;
     /**
      * Creates new form MainFrame
      */
     public PlagiarismDetection() {
         initComponents();
         setBackground(new Color(0, 0, 0, 0));
-
     }
 
     /**
@@ -246,6 +245,8 @@ public class PlagiarismDetection extends javax.swing.JFrame {
         load.show();
         PlagiarismChecker checker = new PlagiarismChecker();
         Style style = doc.addStyle("style", null);
+        //divir un texto en palabras y almacenarlas en un arreglo
+        String[] palabras = textoUsuario.split(" ");
         /*
         try {
             doc.insertString(doc.getLength(), "Línea 1\n", style);
@@ -278,7 +279,7 @@ public class PlagiarismDetection extends javax.swing.JFrame {
         } finally {
             closeConnection(connection);
         }
-        //load.hide();
+        load.hide();
 
     }//GEN-LAST:event_btnComprobarPlagioActionPerformed
 
@@ -321,10 +322,8 @@ public class PlagiarismDetection extends javax.swing.JFrame {
                 } catch (IOException e) {
                     JOptionPane.showMessageDialog(null, "Error al leer el archivo", "Error", JOptionPane.ERROR_MESSAGE);
                 }
-
             }
             if(isSelectedFile == JFileChooser.CANCEL_OPTION){
-                //Log.info("No se seleccionó ningún archivo");
                 JOptionPane.showMessageDialog(null, "No se seleccionó ningún archivo", "Info", JOptionPane.INFORMATION_MESSAGE);
             }
         }catch (Exception e){

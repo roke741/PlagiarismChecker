@@ -9,23 +9,21 @@ import java.util.List;
 
 public class SourcesText {
 
-    //obtengo todas las fuentes de texto de la base de datos
     public static String[] getSourcesText(){
+        List<String> sources = new ArrayList<>();
         try {
             Connection connection = DBConnection.getConnection();
             String query = "SELECT * FROM fuentes";
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
-            List<String> sources = new ArrayList<>();
             while (resultSet.next()) {
                 String source = resultSet.getString("texto");
                 sources.add(source);
             }
             DBConnection.closeConnection(connection);
-            return sources.toArray(new String[0]);
         } catch (SQLException ex) {
             ex.printStackTrace();
-            return null;
         }
+        return sources.toArray(new String[0]);
     }
 }

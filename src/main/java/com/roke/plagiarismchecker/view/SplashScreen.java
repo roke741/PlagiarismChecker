@@ -1,8 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package com.roke.plagiarismchecker.view;
+
+import java.awt.Color;
 
 /**
  *
@@ -10,11 +9,57 @@ package com.roke.plagiarismchecker.view;
  */
 public class SplashScreen extends javax.swing.JFrame {
 
-    /**
-     * Creates new form SplashScreen
-     */
+    String[] messages = {
+            "¡Vaya! Este texto tiene más copia que una fotocopiadora en hora pico.",
+            "¿Es un ensayo o una búsqueda en Google mal disimulada?",
+            "¡Cuidado! Este texto tiene más copia que un examen de matemáticas.",
+            "Cuando dijeron 'sé original', no quisieron decir que copiaras originalidades de otros.",
+            "Esta obra maestra tiene copyright... pero no tuyo.",
+            "Tu creatividad parece estar de vacaciones permanentes.",
+            "¡Felicidades! Has logrado un récord: 100% inspiración ajena.",
+            "Esto no es trabajo en equipo, es un homenaje no solicitado.",
+            "¿Copiar y pegar? Más bien, copiar y pegar sin disimular.",
+            "Tu ensayo grita 'Control + C, Control + V' con orgullo.",
+            "Originalidad: dícese de lo que claramente no encontré aquí.",
+            "Si las palabras hablaran, estas estarían llamando a su abogado por plagio.",
+            "¡Qué coincidencia! Tu texto y el de Internet parecen gemelos separados al nacer.",
+            "Aprecio tu esfuerzo... aunque técnicamente fue el esfuerzo de alguien más.",
+            "Este trabajo tiene tanto texto reciclado que podría salvar el planeta.",
+            "Si copiar es un arte, felicidades, eres el Picasso del plagio.",
+            "¡Impresionante! Hasta los errores ortográficos los copiaste.",
+            "Si el copy-paste fuera deporte olímpico, ya tendrías medalla de oro."
+    };
+
     public SplashScreen() {
         initComponents();
+        setBackground(new Color(0, 0, 0, 0));
+        prgsbar.setStringPainted(true);
+        prgsbar.setString("Cargando...");
+        lblMessage.setText("<html><div style=\"text-align: center\">" + messages[(int) (Math.random() * messages.length)] + "</div></html>");
+        start();
+    }
+
+    public void setProgress(int value){
+        prgsbar.setValue(value);
+    }
+
+    public void start(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 0; i <= 100; i++) {
+                    try {
+                        Thread.sleep(65);
+                        setProgress(i);
+                    } catch (InterruptedException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+                dispose();
+                PlagiarismDetection mainFrm = new PlagiarismDetection();
+                mainFrm.setVisible(true);
+            }
+        }).start();
     }
 
     /**
@@ -26,20 +71,81 @@ public class SplashScreen extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        panelRound1 = new com.roke.plagiarismchecker.view.ui.PanelRound();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        lblMessage = new javax.swing.JLabel();
+        prgsbar = new javax.swing.JProgressBar();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setAlwaysOnTop(true);
+        setUndecorated(true);
+        setResizable(false);
+
+        panelRound1.setRoundBottomLeft(45);
+        panelRound1.setRoundBottomRight(45);
+        panelRound1.setRoundTopLeft(45);
+        panelRound1.setRoundTopRight(45);
+
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/detective.png"))); // NOI18N
+
+        jLabel2.setFont(new java.awt.Font("JetBrains Mono", 1, 36)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("DETECTOR DE PLAGIO");
+
+        lblMessage.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblMessage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        javax.swing.GroupLayout panelRound1Layout = new javax.swing.GroupLayout(panelRound1);
+        panelRound1.setLayout(panelRound1Layout);
+        panelRound1Layout.setHorizontalGroup(
+            panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelRound1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 575, Short.MAX_VALUE)
+                    .addComponent(lblMessage, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        panelRound1Layout.setVerticalGroup(
+            panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelRound1Layout.createSequentialGroup()
+                .addGap(13, 13, 13)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblMessage, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        prgsbar.setBackground(new java.awt.Color(44, 44, 59));
+        prgsbar.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        prgsbar.setForeground(new java.awt.Color(132, 92, 175));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(prgsbar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addComponent(panelRound1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(panelRound1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(prgsbar, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     /**
@@ -78,5 +184,10 @@ public class SplashScreen extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel lblMessage;
+    private com.roke.plagiarismchecker.view.ui.PanelRound panelRound1;
+    private javax.swing.JProgressBar prgsbar;
     // End of variables declaration//GEN-END:variables
 }

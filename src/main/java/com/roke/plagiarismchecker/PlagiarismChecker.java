@@ -1,8 +1,12 @@
 package com.roke.plagiarismchecker;
 import com.roke.plagiarismchecker.service.SourcesText;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
 /**
  *
  * @author Jhordie
@@ -39,5 +43,15 @@ public class PlagiarismChecker {
     
     public String readFileContent(String path) {
         return path;
+    }
+
+    private static String buildSearchTerm(String userInput) {
+        List<String> words = Arrays.asList(userInput.split("\\s+"));
+
+        String searchTerm = words.stream().map(word -> word.trim())
+                .filter(word -> !word.isEmpty())
+                .collect(Collectors.joining(" & "));
+
+        return searchTerm;
     }
 }
