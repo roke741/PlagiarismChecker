@@ -2,6 +2,8 @@ package com.roke.plagiarismchecker.view;
 
 import com.roke.plagiarismchecker.PlagiarismChecker;
 import com.roke.plagiarismchecker.ResultChecker;
+import com.roke.plagiarismchecker.dao.impl.FileDAOImpl;
+import com.roke.plagiarismchecker.dao.interfaces.FileDAO;
 import com.roke.plagiarismchecker.utils.Log;
 
 import java.awt.Color;
@@ -24,15 +26,16 @@ import com.roke.plagiarismchecker.view.ui.LoadDialog;
 import com.roke.plagiarismchecker.view.ui.LoadFileDialog;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.Set;
-import java.util.HashSet;
+
 
 /**
  *
  * @author Jhordie
  */
 public class PlagiarismDetection extends javax.swing.JFrame {
+    private FileDAOImpl fileDAO = new FileDAOImpl();
     LoadFileDialog load = new LoadFileDialog();
+
     Connection connection;
     Statement statement;
     ResultSet resultSet;
@@ -65,6 +68,7 @@ public class PlagiarismDetection extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtResultado = new javax.swing.JTextPane();
+        btnShowFuentes = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Detector de Plagios");
@@ -133,6 +137,13 @@ public class PlagiarismDetection extends javax.swing.JFrame {
         txtResultado.setFont(new java.awt.Font("JetBrains Mono", 0, 13)); // NOI18N
         jScrollPane2.setViewportView(txtResultado);
 
+        btnShowFuentes.setText("Ver Fuentes");
+        btnShowFuentes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnShowFuentesActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -145,6 +156,8 @@ public class PlagiarismDetection extends javax.swing.JFrame {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(btnUploadFile, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnShowFuentes)
+                                .addGap(129, 129, 129)
                                 .addComponent(btnComprobarPlagio, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 516, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -188,7 +201,8 @@ public class PlagiarismDetection extends javax.swing.JFrame {
                         .addGap(28, 28, 28)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnUploadFile, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnComprobarPlagio, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnComprobarPlagio, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnShowFuentes))
                 .addContainerGap())
         );
 
@@ -266,12 +280,13 @@ public class PlagiarismDetection extends javax.swing.JFrame {
             if (result != null) {
                 if (result.isPlagiarized()) {
                     StyleConstants.setForeground(style, Color.ORANGE);
-                    doc.insertString(doc.getLength(), "El texto ingresado contiene plagio con el texto: " + result.toString() + "\n", style);
+                    doc.insertString(doc.getLength(), "EL TEXTO INGRESADO CONTIENE PLAGIO\n" + result.toString() + "\n\n", style);
                 } else {
-                    doc.insertString(doc.getLength(), "El texto ingresado no contiene plagio\n", style);
+                    doc.insertString(doc.getLength(), "EL TEXTO INGRESADO NO CONTIENE PLAGIO\n", style);
                 }
             } else {
-                doc.insertString(doc.getLength(), "Error al comprobar el plagio\n", style);
+                StyleConstants.setForeground(style, Color.RED);
+                doc.insertString(doc.getLength(), "ERROR AL COMPROBAR SI HAY PLAGIO\n", style);
             }
 
         } catch (BadLocationException e) {
@@ -286,50 +301,51 @@ public class PlagiarismDetection extends javax.swing.JFrame {
     private void btnUploadFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUploadFileActionPerformed
         JFileChooser fileChooser = new JFileChooser();
 
-        try{
+        try {
             fileChooser.setDialogTitle("Selecciona un documento de texto");
             fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
             fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Archivos de texto", "txt"));
             fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
             int isSelectedFile = fileChooser.showSaveDialog(null);
-            if(isSelectedFile == JFileChooser.APPROVE_OPTION){
-                if(!fileChooser.getSelectedFile().getAbsolutePath().endsWith(".txt")){
+
+            if (isSelectedFile == JFileChooser.APPROVE_OPTION) {
+                File file = fileChooser.getSelectedFile();
+                if (!file.getAbsolutePath().endsWith(".txt")) {
                     JOptionPane.showMessageDialog(null, "El archivo seleccionado no es un archivo de texto (.txt)", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 load.show();
-                File file = fileChooser.getSelectedFile();
                 Log.info("Archivo seleccionado - " + file);
-                boolean isEmpty = true;
-                BufferedReader lector = new BufferedReader(new FileReader(file));
-                StringBuilder fileContent = new StringBuilder();
-                String linea;
-
                 try {
-                    while ((linea = lector.readLine())!= null) {
-                        if (!linea.trim().isEmpty()) {
-                            isEmpty = false;
-                        }
-                        fileContent.append(linea).append("\n");
-                    }
+                    String fileContent = fileDAO.readFileContent(file);
                     load.hide();
-                    if (isEmpty) {
+                    if (fileDAO.isFileEmpty(file)) {
                         JOptionPane.showMessageDialog(null, "El archivo seleccionado está vacío", "Error", JOptionPane.ERROR_MESSAGE);
                     } else {
                         JOptionPane.showMessageDialog(null, "Archivo cargado correctamente", "Info", JOptionPane.INFORMATION_MESSAGE);
-                        txtInputUser.setText(fileContent.toString());
+                        txtInputUser.setText(fileContent);
                     }
                 } catch (IOException e) {
                     JOptionPane.showMessageDialog(null, "Error al leer el archivo", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             }
-            if(isSelectedFile == JFileChooser.CANCEL_OPTION){
+
+            if (isSelectedFile == JFileChooser.CANCEL_OPTION) {
                 JOptionPane.showMessageDialog(null, "No se seleccionó ningún archivo", "Info", JOptionPane.INFORMATION_MESSAGE);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             Log.info("Error al subir archivo - " + e.getMessage());
         }
     }//GEN-LAST:event_btnUploadFileActionPerformed
+
+    private void btnShowFuentesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnShowFuentesActionPerformed
+        //TableFuentes tableFuentes = new TableFuentes();
+        //tableFuentes.setVisible(true);
+        //abrir la ventana de fuentes sin que se cierre la ventana principal
+        TableFuentes tableFuentes = new TableFuentes();
+        tableFuentes.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        tableFuentes.setVisible(true);
+    }//GEN-LAST:event_btnShowFuentesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -370,6 +386,7 @@ public class PlagiarismDetection extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnComprobarPlagio;
     private javax.swing.JButton btnExit;
+    private javax.swing.JButton btnShowFuentes;
     private javax.swing.JButton btnUploadFile;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

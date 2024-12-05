@@ -95,6 +95,8 @@
                                   <Group type="102" attributes="0">
                                       <Component id="btnUploadFile" min="-2" pref="270" max="-2" attributes="0"/>
                                       <EmptySpace max="32767" attributes="0"/>
+                                      <Component id="btnShowFuentes" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="129" max="-2" attributes="0"/>
                                       <Component id="btnComprobarPlagio" min="-2" pref="346" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" attributes="0">
@@ -154,8 +156,9 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="btnUploadFile" alignment="3" min="-2" pref="46" max="-2" attributes="0"/>
                           <Component id="btnComprobarPlagio" alignment="3" min="-2" pref="46" max="-2" attributes="0"/>
+                          <Component id="btnShowFuentes" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -298,6 +301,14 @@
                 </Component>
               </SubComponents>
             </Container>
+            <Component class="javax.swing.JButton" name="btnShowFuentes">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Ver Fuentes"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnShowFuentesActionPerformed"/>
+              </Events>
+            </Component>
           </SubComponents>
         </Container>
       </SubComponents>

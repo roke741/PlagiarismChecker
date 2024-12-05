@@ -1,5 +1,5 @@
 package com.roke.plagiarismchecker;
-import com.roke.plagiarismchecker.service.SourcesText;
+import com.roke.plagiarismchecker.dao.controllers.FuenteController;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -16,10 +16,11 @@ public class PlagiarismChecker {
 
     public PlagiarismChecker() {
         database = new HashMap<>();
-        String[] fuentes = SourcesText.getSourcesText();
+        FuenteController fuente = new FuenteController();
+        String[] fuentes = fuente.cargarFuentes();
         loadFiles(fuentes);
     }
-    
+
     public boolean loadFiles(String[] paths) {
         for (String path: paths){
             String content = readFileContent(path);
