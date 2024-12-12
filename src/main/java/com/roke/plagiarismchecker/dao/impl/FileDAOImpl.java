@@ -14,7 +14,7 @@ public class FileDAOImpl implements FileDAO{
         try (BufferedReader lector = new BufferedReader(new FileReader(file))) {
             String linea;
             while ((linea = lector.readLine()) != null) {
-                fileContent.append(linea).append("\n");
+                fileContent.append(linea);
             }
         }
         return fileContent.toString();

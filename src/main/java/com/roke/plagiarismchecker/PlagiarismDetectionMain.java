@@ -39,6 +39,7 @@ public class PlagiarismDetectionMain {
             SwingUtilities.invokeLater(new Runnable() {
                 public void run(){
                     SplashScreen splash = new SplashScreen();
+                    splash.setIconImage(new ImageIcon(getClass().getClassLoader().getResource("icons/detective.png")).getImage());
                     splash.setVisible(true);
                 }
             });

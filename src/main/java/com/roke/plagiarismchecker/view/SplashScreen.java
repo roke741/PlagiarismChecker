@@ -1,6 +1,7 @@
 
 package com.roke.plagiarismchecker.view;
 
+import javax.swing.*;
 import java.awt.Color;
 
 /**
@@ -57,6 +58,7 @@ public class SplashScreen extends javax.swing.JFrame {
                 }
                 dispose();
                 PlagiarismDetection mainFrm = new PlagiarismDetection();
+                mainFrm.setIconImage(new ImageIcon(getClass().getClassLoader().getResource("icons/detective.png")).getImage());
                 mainFrm.setVisible(true);
             }
         }).start();

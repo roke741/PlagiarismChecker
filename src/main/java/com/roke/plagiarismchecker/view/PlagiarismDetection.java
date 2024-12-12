@@ -260,7 +260,7 @@ public class PlagiarismDetection extends javax.swing.JFrame {
         PlagiarismChecker checker = new PlagiarismChecker();
         Style style = doc.addStyle("style", null);
         //divir un texto en palabras y almacenarlas en un arreglo
-        String[] palabras = textoUsuario.split(" ");
+        //String[] palabras = textoUsuario.split(" ");
         /*
         try {
             doc.insertString(doc.getLength(), "Línea 1\n", style);
@@ -300,7 +300,6 @@ public class PlagiarismDetection extends javax.swing.JFrame {
 
     private void btnUploadFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUploadFileActionPerformed
         JFileChooser fileChooser = new JFileChooser();
-
         try {
             fileChooser.setDialogTitle("Selecciona un documento de texto");
             fileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);

@@ -4,6 +4,7 @@
  */
 package com.roke.plagiarismchecker.view.ui;
 
+import javax.swing.*;
 import java.awt.Color;
 
 /**
@@ -18,6 +19,9 @@ public class LoadDialog extends javax.swing.JFrame {
     public LoadDialog() {
         initComponents();
         setBackground(new Color(0, 0, 0, 0));
+        //agregar el gif al label
+        //ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource("load.gif"));
+        //lblLoader.setIcon(icon);
     }
     
 
@@ -32,7 +36,7 @@ public class LoadDialog extends javax.swing.JFrame {
     private void initComponents() {
 
         panelRound1 = new com.roke.plagiarismchecker.view.ui.PanelRound();
-        jLabel1 = new javax.swing.JLabel();
+        lblLoader = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -45,26 +49,26 @@ public class LoadDialog extends javax.swing.JFrame {
         panelRound1.setRoundTopLeft(20);
         panelRound1.setRoundTopRight(20);
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/load_file_6.gif"))); // NOI18N
+        lblLoader.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
+        lblLoader.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblLoader.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icons/preview_1.png"))); // NOI18N
 
-        jLabel2.setText("CARGANDO");
+        jLabel2.setText("COMPROBANDO");
 
         javax.swing.GroupLayout panelRound1Layout = new javax.swing.GroupLayout(panelRound1);
         panelRound1.setLayout(panelRound1Layout);
         panelRound1Layout.setHorizontalGroup(
             panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lblLoader, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(panelRound1Layout.createSequentialGroup()
-                .addGap(36, 36, 36)
+                .addGap(24, 24, 24)
                 .addComponent(jLabel2)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         panelRound1Layout.setVerticalGroup(
             panelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelRound1Layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(lblLoader, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -127,8 +131,8 @@ public class LoadDialog extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel lblLoader;
     private com.roke.plagiarismchecker.view.ui.PanelRound panelRound1;
     // End of variables declaration//GEN-END:variables
 }

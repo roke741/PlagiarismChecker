@@ -88,7 +88,12 @@ public class TableFuentes extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblFuentes.setColumnSelectionAllowed(true);
         jScrollPane1.setViewportView(tblFuentes);
+        tblFuentes.getColumnModel().getSelectionModel().setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        if (tblFuentes.getColumnModel().getColumnCount() > 0) {
+            tblFuentes.getColumnModel().getColumn(1).setResizable(false);
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
